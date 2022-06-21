@@ -44,6 +44,7 @@ try:
 		certificate.key_pool_file(state.pool_keys)
 		#/feigi
 
+
 		for index, key in enumerate(state.pool_keys):
 			state.keys.append((index,key))
 		#print("my keys: "+str(state.keys))

@@ -54,7 +54,7 @@ def async_listen_to_messages():
 	c.start()
 
 def async_listen():
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.settimeout(5) # will raise error in case timeout happened
 	s.bind(('',PORT))
 	print("Created socket. Listening for messages...")	
@@ -167,7 +167,7 @@ def process_message(message, ip):
 def _get_block(s, count):
 	if count <= 0:
 		return ''
-	buf = ''
+	buf = '{c}'
 	while len(buf) < count:
 		buf2, address = s.recvfrom(count - len(buf))
 		if not buf2:
@@ -176,8 +176,10 @@ def _get_block(s, count):
 				raise RuntimeError("underflow")
 			else:
 				return ''
+		
 		print(type(buf), type(buf2))
 		buf += buf2
+		
 	return buf, address
 
 # send block of msg 

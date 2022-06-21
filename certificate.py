@@ -4,6 +4,7 @@ from Crypto.PublicKey import RSA
 from os.path import exists
 from state import *
 from global_data import state
+import builder
 
 
 def generate_asym_key(bits=2048):
@@ -17,22 +18,23 @@ def generate_asym_key(bits=2048):
 publickey, privateKey = generate_asym_key()
 
 def write_certificate_to_file():
-	file_exists = exists('./certificate.txt')	
+	file_exists = exists('./certificate.crt')	
 	if not file_exists:
-		with open('certificate.txt', 'w') as wf:
-			wf.write(privateKey.decode("utf-8"))
-			return True
+		# with open('certificate.txt', 'w') as wf:
+		# 	wf.write(privateKey.decode("utf-8"))
+		builder.make_certificate()
+		return True
 	else:
 		print('Existing Certificate')
 
 
 # function that save the key pool to encrypted file
 def key_pool_file(pool_keys):
-	file_exists = exists('./key_pool.txt')	
+	file_exists = exists('./key_pool.crt')	
 	if not file_exists:
-		with open('pool_keys.txt', 'w') as wf:
+		with open('pool_keys.crt', 'w') as wf:
 			for key in pool_keys:
-				wf.write("%s," % key)
+				wf.write("%s\n" % key)
 			return True
 	else:
 		print('The file exists')
