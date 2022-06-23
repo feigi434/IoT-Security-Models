@@ -1,6 +1,6 @@
 from state import *
 from global_data import *
-import messages, client, crypt, certificate
+import messages, client, crypt, pool_keys
 import time, sys
 
 print("**Node startup**")
@@ -41,7 +41,8 @@ try:
 		#feigi
 
 		#Save the list of keys to the file
-		certificate.key_pool_file(state.pool_keys)
+		pool_keys.make_key_pool_file(state.pool_keys)
+		
 		#/feigi
 
 

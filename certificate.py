@@ -20,22 +20,9 @@ publickey, privateKey = generate_asym_key()
 def write_certificate_to_file():
 	file_exists = exists('./certificate.crt')	
 	if not file_exists:
-		# with open('certificate.txt', 'w') as wf:
-		# 	wf.write(privateKey.decode("utf-8"))
 		builder.make_certificate()
 		return True
 	else:
 		print('Existing Certificate')
 
 
-# function that save the key pool to encrypted file
-def key_pool_file(pool_keys):
-	file_exists = exists('./key_pool.crt')	
-	if not file_exists:
-		with open('pool_keys.crt', 'w') as wf:
-			for key in pool_keys:
-				wf.write("%s\n" % key)
-			return True
-	else:
-		print('The file exists')
-		return False

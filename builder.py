@@ -9,7 +9,6 @@ import socket
 import re
 
 
-
 one_day = datetime.timedelta(1, 0, 0)
 private_key = rsa.generate_private_key(
     public_exponent=65537,
@@ -38,6 +37,7 @@ certificate = builder.sign(
     backend=default_backend()
 )
 
+
 # with open("ca.key", "wb") as f:
 #     f.write(private_key.private_bytes(
 #         encoding=serialization.Encoding.PEM,
@@ -45,11 +45,13 @@ certificate = builder.sign(
 #         encryption_algorithm=serialization.BestAvailableEncryption(b"openstack-ansible")
 #     ))
 
+
 def make_certificate():
     with open('certificate.crt', 'wb') as f:
         f.write(certificate.public_bytes(
             encoding=serialization.Encoding.PEM,
         ))
+    
 
 # pattern = '^0x0[0-9A-Z]'
 # result = re.match(pattern, '0x07')
