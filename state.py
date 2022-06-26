@@ -15,6 +15,8 @@ CLIENT_GETTING_KEYS = 6
 CLIENT_GOT_KEYS = 7
 CLIENT_DONE = 8
 
+# encrypted_files_base_file - TODO
+
 class State(object):
 	
 	status = INIT # hold the current state/ status of the node in the network

@@ -1,9 +1,9 @@
-from itertools import count
+from pydoc import stripid
 from state import *
-from certificate import publickey , privateKey
 from global_data import state
+
+import certificate
 import messages
-from messages import Message
 import time, os
 import os.path
 
@@ -25,11 +25,11 @@ def find_master():
 			state.status =  MASTER_FOUND
 			# feigi
 			if not state.PUBLIC_KEY:
-				state.public_key = publickey # The public key common to all home network devices
+				state.public_key = certificate.publickey # The public key common to all home network devices
 				state.CERTIFIED , lines = check_certificate()
 				if (state.CERTIFIED == True and lines == 27):
-					with open('certificate.crt', 'a') as wf:
-						wf.write('\n'+publickey.decode("utf-8"))
+					with open('./encrypted_files/certificate.crt', 'a') as wf:
+						wf.write('\n'+certificate.publickey.decode("utf-8"))
 					state.PUBLIC_KEY = True
 					return True
 			# /feigi
@@ -45,14 +45,15 @@ def publishMe():
 # feigi
 def check_certificate():
 	print("Looking for the Certificate...")
-	if (os.path.exists( r'.\certificate.crt')):
-		with open('certificate.crt', 'r') as rf:
+	if (os.path.exists('./encrypted_files/certificate.crt')):
+		with open('./encrypted_files/certificate.crt', 'r') as rf:
 			lines = rf.readlines()
-			if len(lines) == 36 :
+			print('*****************lines[0]', BEGIN in lines[0])
+			if len(lines) == 36:
 				# if lines[0].find(BEGIN)!=-1 & lines[26].find(END)!=-1:
 				print("CERTIFIED")###### change title
 				return True, 36
-			if  len(lines) == 19 :
+			if len(lines) == 19:
 				print("CERTIFIED")###### change title
 				return True, 19
 			else:

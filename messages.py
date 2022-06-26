@@ -1,4 +1,4 @@
-import struct, threading, pickle, socket, time, os, math, random
+import struct, threading, pickle, socket, os, math, random
 from state import *
 from global_data import state
 import crypt

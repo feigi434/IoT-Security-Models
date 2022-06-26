@@ -5,9 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-*.crt
-*.key
-*.txt
+encrypted_files/
 
 # Distribution / packaging
 .Python

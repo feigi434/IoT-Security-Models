@@ -1,10 +1,5 @@
 #Creating a certificate confirming the reliability of the IoT device
-
 from Crypto.PublicKey import RSA
-from os.path import exists
-from state import *
-from global_data import state
-import builder
 
 
 def generate_asym_key(bits=2048):
@@ -16,13 +11,5 @@ def generate_asym_key(bits=2048):
 
 
 publickey, privateKey = generate_asym_key()
-
-def write_certificate_to_file():
-	file_exists = exists('./certificate.crt')	
-	if not file_exists:
-		builder.make_certificate()
-		return True
-	else:
-		print('Existing Certificate')
 
 

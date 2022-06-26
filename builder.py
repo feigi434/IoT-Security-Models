@@ -5,17 +5,21 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.x509.oid import NameOID
 import datetime
 import uuid
-import socket
-import re
-
+import os
 
 one_day = datetime.timedelta(1, 0, 0)
-private_key = rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=2048,
-    backend=default_backend()
-)
-public_key = private_key.public_key()
+
+def generate_asym_key():
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048,
+        backend=default_backend()
+    )
+    public_key = private_key.public_key()
+    return private_key, public_key
+
+private_key, public_key = generate_asym_key()
+
 builder = x509.CertificateBuilder()
 builder = builder.subject_name(x509.Name([
     x509.NameAttribute(NameOID.COMMON_NAME, u'openstack-ansible Test CA'),
@@ -47,11 +51,24 @@ certificate = builder.sign(
 
 
 def make_certificate():
-    with open('certificate.crt', 'wb') as f:
+    path = './encrypted_files'
+    os.mkdir(path)
+    with open('./encrypted_files/certificate.crt', 'wb') as f:
         f.write(certificate.public_bytes(
             encoding=serialization.Encoding.PEM,
         ))
-    
+
+def write_certificate_to_file():
+    file_exist = os.path.exists('./encrypted_files/certificate.crt')
+    if file_exist:
+        make_certificate()
+        print('Certificate successfully created')
+    else:
+        print('Existing Certificate')
+
+make_certificate()
+
+
 
 # pattern = '^0x0[0-9A-Z]'
 # result = re.match(pattern, '0x07')
