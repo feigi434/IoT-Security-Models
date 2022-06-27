@@ -25,11 +25,11 @@ def find_master():
 			state.status =  MASTER_FOUND
 			# feigi
 			if not state.PUBLIC_KEY:
-				state.public_key = certificate.publickey # The public key common to all home network devices
+				state.public_key = certificate.public_key # The public key common to all home network devices
 				state.CERTIFIED , lines = check_certificate()
 				if (state.CERTIFIED == True and lines == 27):
 					with open('./encrypted_files/certificate.crt', 'a') as wf:
-						wf.write('\n'+certificate.publickey.decode("utf-8"))
+						wf.write('\n'+certificate.public_key.decode("utf-8"))
 					state.PUBLIC_KEY = True
 					return True
 			# /feigi
