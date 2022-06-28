@@ -126,7 +126,7 @@ def process_message(message, ip):
 			state.neighbors.append((ip,-1))
 		if state.status == CLIENT_DONE or state.status == MASTER_DONE:
 			common_key = -1 
-			# Intersect my keys & the sender keys
+			# Intersect my keys and the sender keys
 			common_keys = list(set(message.data).intersection([x[0] for x in state.keys]))
 			# If common key is found- update internal state
 			if common_keys: 

@@ -35,7 +35,6 @@ class State(object):
 	
 	# feigi
 	CERTIFIED = False # certificate was displayed
-	PUBLIC_KEY = False # There is a public key to the home network
 	# /feigi
  
 	
