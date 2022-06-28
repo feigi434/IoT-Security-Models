@@ -15,6 +15,9 @@ CLIENT_GETTING_KEYS = 6
 CLIENT_GOT_KEYS = 7
 CLIENT_DONE = 8
 
+PATH_DIR_ENC = 'encrypted_files'
+
+
 # encrypted_files_base_file - TODO
 
 class State(object):

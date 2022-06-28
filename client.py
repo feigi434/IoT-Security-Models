@@ -1,15 +1,18 @@
-from pydoc import stripid
-from state import *
-from global_data import state
-
-import certificate
-import messages
+from genericpath import exists
+import certificate, state, messages
 import time, os
 import os.path
+import shutil
+
+from state import *
+from global_data import state
+# from pydoc import stripid
 
 
-BEGIN = '-----BEGIN RSA PRIVATE KEY-----'
-END = '-----END RSA PRIVATE KEY-----'
+BEGIN = '-----BEGIN CERTIFICATE-----'
+END = '-----END CERTIFICATE-----'
+
+LOCATION = os.getcwd()
 
 def find_master():
 	print("Looking for the Master on the network...")
@@ -42,26 +45,36 @@ def publishMe():
 	print("Publishing my IP on the network...")
 	messages.broadcast(messages.I_AM_ON_THE_NETWORK)
 
+# Deleting an non-empty folder
+def delete_dir(dir):
+	path = path = os.path.join(LOCATION, dir)
+	if exists(path=path):
+		shutil.rmtree(path, ignore_errors=False)
+		print("Deleted '%s' directory successfully" % path)
+		return True
+	else:
+		print("The directory : '%s' not exist" % path)
+		return False
+# /feigi
+
+
 # feigi
 def check_certificate():
 	print("Looking for the Certificate...")
 	if (os.path.exists('./encrypted_files/certificate.crt')):
 		with open('./encrypted_files/certificate.crt', 'r') as rf:
 			lines = rf.readlines()
-			print('*****************lines[0]', BEGIN in lines[0])
 			if len(lines) == 36:
 				# if lines[0].find(BEGIN)!=-1 & lines[26].find(END)!=-1:
 				print("CERTIFIED")###### change title
 				return True, 36
-			if len(lines) == 19:
-				print("CERTIFIED")###### change title
+			if (BEGIN in lines[0]) & (END in lines[18]):
+				print("----CERTIFIED----")###### change title
 				return True, 19
 			else:
 				print("The certificate is unreliable")
+				delete_dir('encrypted_files') # checking!!!!!!!!
 				return False
 	else:
 		print("not find certificate")
 		return False
-
-
-# /feigi
