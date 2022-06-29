@@ -42,6 +42,28 @@ def find_master():
 					return True
 			# /feigi
 
+			# feigi - checking
+			# if not state.public_key:
+			# 	state.public_key = certificate.public_key # The public key common to all home network devices
+			# 	state.CERTIFIED , lines = check_certificate()
+			# 	if state.CERTIFIED == True and lines == 19:
+			# 		with open('./encrypted_files/certificate.crt', 'a') as wf:
+			# 			try:
+			# 				# pem = certificate.public_key.public_bytes(
+			# 				# 	encoding=serialization.Encoding.PEM,
+			# 				# 	format=serialization.PublicFormat.SubjectPublicKeyInfo
+			# 				# )
+			# 				publicKey = serialization.load_pem_public_key(
+			# 						certificate.public_key.read(),
+			# 						backend=default_backend()
+			# 					)
+			# 				print('*******************', publicKey)
+			# 				# wf.write(f'\n{pem}')
+			# 			except BaseException as ex:
+			# 				print(ex)
+			# 		return True
+			# /feigi - checking
+
 			print("No master is found! Setting myself as master")
 			return True
 	return False
@@ -76,9 +98,9 @@ def check_certificate():
 			if (BEGIN in lines[0]) and (END in lines[18]):
 				print("----CERTIFIED----")###### change title
 				return True, 19
-				print("The certificate is unreliable")
+		print("The certificate is unreliable")
 		delete_dir('encrypted_files')
-				return False
+		return False
 	else:
 		print("not find certificate")
 		return False

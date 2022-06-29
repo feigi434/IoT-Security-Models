@@ -1,6 +1,6 @@
 from src.state import *
 from src.global_data import *
-import src.messages as messages, client, crypt, src.pool_keys as pool_keys
+import src.messages as messages, src.client as client, crypt, src.pool_keys as pool_keys
 import time, sys
 
 print("**Node startup**")
