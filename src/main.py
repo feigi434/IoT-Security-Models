@@ -1,6 +1,6 @@
-from state import *
-from global_data import *
-import messages, client, crypt, pool_keys
+from src.state import *
+from src.global_data import *
+import src.messages as messages, client, crypt, src.pool_keys as pool_keys
 import time, sys
 
 print("**Node startup**")
@@ -26,7 +26,7 @@ try:
 	print("Master is found! master ip is: " + str(state.masterIP))
 
 	if(state.IAmMaster): # perform Master logic
-		import master
+		import src.master as master
 		state.status = MASTER_INIT
 		
 		# Master calculations
