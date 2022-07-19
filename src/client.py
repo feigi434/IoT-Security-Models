@@ -1,5 +1,5 @@
 from genericpath import exists
-import src.certificate as certificate, src.state as state, src.messages as messages
+import certificate,state, messages
 import time, os
 import os.path
 import shutil
@@ -9,8 +9,8 @@ from base64 import b64decode
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
-from src.state import *
-from src.global_data import state
+from state import *
+from global_data import state
 # from pydoc import stripid
 
 
@@ -36,8 +36,11 @@ def find_master():
 				state.public_key = certificate.public_key # The public key common to all home network devices
 				state.CERTIFIED , lines = check_certificate()
 				if state.CERTIFIED == True and lines == 19:
-					with open('./encrypted_files/certificate.crt', 'a') as wf:
-						wf.write('\n'+certificate.public_key.decode("utf-8"))
+					with open('../encrypted_files/certificate.crt', 'a') as wf:
+						wf.write(certificate.public_key.public_bytes(
+							encoding=serialization.Encoding.PEM,
+							format=serialization.PublicFormat.PKCS1
+						).decode())
 					state.PUBLIC_KEY = True
 					return True
 			# /feigi
@@ -47,7 +50,7 @@ def find_master():
 			# 	state.public_key = certificate.public_key # The public key common to all home network devices
 			# 	state.CERTIFIED , lines = check_certificate()
 			# 	if state.CERTIFIED == True and lines == 19:
-			# 		with open('./encrypted_files/certificate.crt', 'a') as wf:
+			# 		with open('../encrypted_files/certificate.crt', 'a') as wf:
 			# 			try:
 			# 				# pem = certificate.public_key.public_bytes(
 			# 				# 	encoding=serialization.Encoding.PEM,
@@ -88,8 +91,8 @@ def delete_dir(dir):
 # feigi
 def check_certificate():
 	print("Looking for the Certificate...")
-	if (os.path.exists('./encrypted_files/certificate.crt')):
-		with open('./encrypted_files/certificate.crt', 'r') as rf:
+	if (os.path.exists('../encrypted_files/certificate.crt')):
+		with open('../encrypted_files/certificate.crt', 'r') as rf:
 			lines = rf.readlines()
 			if len(lines) == 36:
 				# if lines[0].find(BEGIN)!=-1 and lines[26].find(END)!=-1:

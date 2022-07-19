@@ -36,13 +36,19 @@ certificate = builder.sign(
  
 
 def create_certificate():
-    file_exist = os.path.exists('./encrypted_files/certificate.crt')
+    file_exist = os.path.exists('../encrypted_files/certificate.crt')
     if not file_exist:
-        path = './encrypted_files'
+        path = '../encrypted_files'
         os.mkdir(path)
-        with open('./encrypted_files/certificate.crt', 'wb') as f:
-            f.write(certificate.public_bytes(
+        with open('../encrypted_files/certificate.crt', 'wb') as wf:
+            wf.write(certificate.public_bytes(
                 encoding=serialization.Encoding.PEM,
+            ))
+        with open('../encrypted_files/ca.key', 'wb') as wf:
+            wf.write(private_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.TraditionalOpenSSL,
+                encryption_algorithm=serialization.BestAvailableEncryption(b"openstack-ansible")
             ))
         print('Certificate successfully created')
     else:

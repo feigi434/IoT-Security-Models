@@ -1,6 +1,6 @@
 import struct, threading, pickle, socket, os, math, random
-from src.state import *
-from src.global_data import state
+from state import *
+from global_data import state
 import crypt
 
 IS_THERE_MASTER = "IS_THERE_MASTER"

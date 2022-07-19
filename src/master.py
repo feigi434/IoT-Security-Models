@@ -1,9 +1,9 @@
-from src.state import *
-from src.global_data import state
+from state import *
+from global_data import state
 from scipy.optimize import fsolve
 from math import log
 import random, math, string
-import src.messages as messages
+import messages
 from os.path import exists
 
 KEY_SIZE = 16
